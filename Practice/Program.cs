@@ -13,7 +13,8 @@ namespace Practice
             Hospital hospital = new Hospital(capacity);
             int no = 1;
 
-            
+            for (int i = 0; i < capacity; i++)
+            {
                 Console.WriteLine("\n1. Appointment yarat");
                 Console.WriteLine("2. Appointment-i bitir");
                 Console.WriteLine("3. Bütün appointment-lere bax");
@@ -26,91 +27,94 @@ namespace Practice
 
                 try
                 {
-                    if (secim == "1")
+                    switch (secim)
                     {
-                        Console.Write("Xestenin adı: ");
-                        string patientName = Console.ReadLine();
+                        case "1":
+                            Console.Write("Xestenin adı: ");
+                            string patientName = Console.ReadLine();
 
-                        Console.Write("Xestenin soyadı: ");
-                        string patientSurname = Console.ReadLine();
+                            Console.Write("Xestenin soyadı: ");
+                            string patientSurname = Console.ReadLine();
 
-                        Console.Write("Hekimin adı: ");
-                        string doctorName = Console.ReadLine();
+                            Console.Write("Hekimin adı: ");
+                            string doctorName = Console.ReadLine();
 
-                        Console.Write("Hekimin soyadı: ");
-                        string doctorSurname = Console.ReadLine();
+                            Console.Write("Hekimin soyadı: ");
+                            string doctorSurname = Console.ReadLine();
 
-                        Console.Write("Başlama tarixi ve saatı (mes: 2025-04-10 14:00): ");
-                        DateTime startDate = DateTime.Parse(Console.ReadLine());
+                            Console.Write("Başlama tarixi ve saatı (mes: 2025-04-10 14:00): ");
+                            DateTime startDate = DateTime.Parse(Console.ReadLine());
 
-                        Console.Write("Bitme tarixi ve saatı (mes: 2025-04-10 14:30): ");
-                        DateTime endDate = DateTime.Parse(Console.ReadLine());
+                            Console.Write("Bitme tarixi ve saatı (mes: 2025-04-10 14:30): ");
+                            DateTime endDate = DateTime.Parse(Console.ReadLine());
 
-                        string fullPatientName = patientName + " " + patientSurname;
-                        string fullDoctorName = doctorName + " " + doctorSurname;
+                            string fullPatientName = patientName + " " + patientSurname;
+                            string fullDoctorName = doctorName + " " + doctorSurname;
 
-                        Appointment a = new Appointment(no++, fullPatientName, fullDoctorName, startDate, endDate);
-                        hospital.AddAppointment(a);
-                    }
-                    else if (secim == "2")
-                    {
-                        Console.Write("Appointment No: ");
-                        int n = int.Parse(Console.ReadLine());
-                        hospital.EndAppointment(n);
-                    }
-                    else if (secim == "3")
-                    {
-                        var appointments = hospital.GetAllAppointments();
-                        if (appointments.Length > 0)
-                        {
-                            foreach (var appointment in appointments)
+                            Appointment a = new Appointment(no++, fullPatientName, fullDoctorName, startDate, endDate);
+                            hospital.AddAppointment(a);
+                            break;
+                        case "2":
                             {
-                                Console.WriteLine($"Appointment No: {appointment.No}, Patient: {appointment.Patient}, Doctor: {appointment.Doctor}");
+                                Console.Write("Appointment No: ");
+                                int n = int.Parse(Console.ReadLine());
+                                hospital.EndAppointment(n);
+                                break;
                             }
-                        }
-                    }
-                    else if (secim == "4")
-                    {
-                        var weeklyAppointments = hospital.GetWeeklyAppointments();
-                        if (weeklyAppointments.Length > 0)
-                        {
-                            foreach (var appointment in weeklyAppointments)
+                        case "3":
+                            var appointments = hospital.GetAllAppointments();
+                            if (appointments.Length > 0)
                             {
-                                Console.WriteLine($"Appointment No: {appointment.No}, Patient: {appointment.Patient}, Doctor: {appointment.Doctor}");
+                                foreach (var appointment in appointments)
+                                {
+                                    Console.WriteLine($"Appointment No: {appointment.No}, Patient: {appointment.Patient}, Doctor: {appointment.Doctor}");
+                                }
                             }
-                        }
-                    }
-                    else if (secim == "5")
-                    {
-                        var todaysAppointments = hospital.GetTodaysAppointments();
-                        if (todaysAppointments.Length > 0)
-                        {
-                            foreach (var appointment in todaysAppointments)
+                            break;
+                        case "4":
+                            var weeklyAppointments = hospital.GetWeeklyAppointments();
+                            if (weeklyAppointments.Length > 0)
                             {
-                                Console.WriteLine($"Appointment No: {appointment.No}, Patient: {appointment.Patient}, Doctor: {appointment.Doctor}");
+                                foreach (var appointment in weeklyAppointments)
+                                {
+                                    Console.WriteLine($"Appointment No: {appointment.No}, Patient: {appointment.Patient}, Doctor: {appointment.Doctor}");
+                                }
                             }
-                        }
-                    }
-                    else if (secim == "6")
-                    {
-                        var continuingAppointments = hospital.GetAllContinuingAppointments();
-                        if (continuingAppointments.Length > 0)
-                        {
-                            foreach (var appointment in continuingAppointments)
+                            break;
+                        case "5":
+                            var todaysAppointments = hospital.GetTodaysAppointments();
+                            if (todaysAppointments.Length > 0)
                             {
-                                Console.WriteLine($"Appointment No: {appointment.No}, Patient: {appointment.Patient}, Doctor: {appointment.Doctor}");
+                                foreach (var appointment in todaysAppointments)
+                                {
+                                    Console.WriteLine($"Appointment No: {appointment.No}, Patient: {appointment.Patient}, Doctor: {appointment.Doctor}");
+                                }
                             }
-                        }
+                            break;
+                        case "6":
+                            var continuingAppointments = hospital.GetAllContinuingAppointments();
+                            if (continuingAppointments.Length > 0)
+                            {
+                                foreach (var appointment in continuingAppointments)
+                                {
+                                    Console.WriteLine($"Appointment No: {appointment.No}, Patient: {appointment.Patient}, Doctor: {appointment.Doctor}");
+                                }
+                            }
+                            break;
+
+                        case "7":
+                            Console.WriteLine("Proqram bitdi.");
+                            break;
+
+                        default:
+
+                            Console.WriteLine("Yanlış seçim.");
+
+                            break;
                     }
-                else if (secim == "7")
-                {
-                    Console.WriteLine("Proqram bitdi.");
                 }
-                else
-                {
-                    Console.WriteLine("Yanlış seçim.");
-                }
-            }
+
+
                 catch (NotFoundException ex)
                 {
                     Console.WriteLine("Xeta: " + ex.Message);
@@ -119,6 +123,7 @@ namespace Practice
                 {
                     Console.WriteLine("Naməlum xəta baş verdi.");
                 }
+            }
             }
         }
     }
